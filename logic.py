@@ -72,4 +72,4 @@ def prep_albums(artist):
         "Live From Clear Channel Stripped 2008"
     ]
 
-    return albums
+    return albums, dupe_albums
