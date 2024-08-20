@@ -43,19 +43,33 @@ def search_for_artist(token, artist_name):
     
     return json_result[0]
 
-def get_songs_by_artist(token, artist_id):
-    url = f"https://api.spotify.com/v1/artists/{artist_id}/top-tracks?country=US"
+def get_albums_by_artist(token, artist_id):
+    url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?include_groups=album&limit=50"
     headers = get_auth_header(token)
     result = get(url, headers=headers)
-    json_result = json.loads(result.content)["tracks"]
+    json_result = json.loads(result.content)["items"]
 
     return json_result
 
+def prep_albums(artist):
+    token = get_token()
+    result = search_for_artist(token, artist)
+    artist_id = result["id"]
+    albums = get_albums_by_artist(token, artist_id)
 
-token = get_token()
-result = search_for_artist(token, "Taylor Swift")
-artist_id = result["id"]
-top_tracks = get_songs_by_artist(token, artist_id)
+    dupe_albums = [
+        "folklore: the long pond studio sessions (from the Disney+ special) [deluxe edition]",
+        "reputation Stadium Tour Surprise Song Playlist",
+        "1989 (Deluxe Edition)",
+        "1989",
+        "Red (Deluxe Edition)",
+        "Red",
+        "Speak Now World Tour Live",
+        "Speak Now (Deluxe Edition)",
+        "Speak Now",
+        "Fearless Platinum Edition",
+        "Fearless",
+        "Live From Clear Channel Stripped 2008"
+    ]
 
-for i, song in enumerate(top_tracks):
-    print(f"{i + 1}. {song["name"]}")
+    return albums

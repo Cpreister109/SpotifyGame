@@ -1,0 +1,25 @@
+img {
+    border-radius: 10px;
+}
+
+p {
+    font-size: 10px;
+    text-align: center;
+    width: 100%
+}
+
+.st-emotion-cache-1kyxreq.e115fcil2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row-widget.stButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div {
+    margin: 0px;
+}
