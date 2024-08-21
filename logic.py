@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from requests import post, get
+import streamlit as st
 import base64
 import json
 import os
@@ -51,6 +52,16 @@ def get_albums_by_artist(token, artist_id):
 
     return json_result
 
+# FINISH
+def get_tracks_in_album(token, album_id):
+    url = f"https://api.spotify.com/v1/albums/{album_id}/tracks"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)["items"]
+    
+    return json_result
+# FINISH
+
 def prep_albums(artist):
     token = get_token()
     result = search_for_artist(token, artist)
@@ -73,3 +84,18 @@ def prep_albums(artist):
     ]
 
     return albums, dupe_albums
+
+def display_albums(artist_albums, duplicate_albums, num_cols, cols):
+    for i, album in enumerate(artist_albums):   
+        if album['name'] not in duplicate_albums:
+            url = album['images'][0]['url']
+            print(url)
+            name =album['name']
+            col = cols[i % num_cols]
+            with col:
+                with st.container():
+                    st.image(url, width=150)
+                    st.button(name)
+
+test = get_tracks_in_album(get_token(), "3sJt9QhdFvXiLPtY3oMjFC")
+print(test)
